@@ -356,7 +356,7 @@ class TestSubmissionUpload(SingleScenarioTestSuite, TestWithPatchesMixin):
         self.assertIn(u'Technical details: CSRF verification failed', modal.message)
         # In case message rendering text changed to escape html, this will
         # fail and notify of the error
-        self.assertNotRegexpMatches(modal.message, r".*<\s*p\s*/?>")
+        self.assertNotRegexpMatches(modal.message, r".*<\s*p\s*/?>")  # pylint: disable=deprecated-method
 
     def test_upload_submissions_plain403(self):
 
@@ -371,7 +371,7 @@ class TestSubmissionUpload(SingleScenarioTestSuite, TestWithPatchesMixin):
         self.assertIn(u'Technical details: 403 error', modal.message)
         # In case message rendering text changed to escape html, this will
         # fail and notify of the error
-        self.assertNotRegexpMatches(modal.message, r".*<\s*p\s*/?>")
+        self.assertNotRegexpMatches(modal.message, r".*<\s*p\s*/?>")  # pylint: disable=deprecated-method
 
     def test_upload_submissions_xss_file(self):
 

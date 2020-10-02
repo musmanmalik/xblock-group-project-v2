@@ -9,8 +9,8 @@ from group_project_v2.json_requests import GET
 from group_project_v2.project_api import TypedProjectAPI
 from group_project_v2.project_api.api_implementation import WORKGROUP_API, PROJECTS_API, COURSES_API
 from tests.utils import TestWithPatchesMixin, make_review_item as mri
-import tests.unit.project_api.canned_responses as canned_responses
-from six.moves.urllib.parse import urlencode  # pylint: disable=E6011
+import tests.unit.project_api.canned_responses as canned_responses  # pylint: disable=useless-import-alias
+from six.moves.urllib.parse import urlencode
 
 
 @ddt.ddt

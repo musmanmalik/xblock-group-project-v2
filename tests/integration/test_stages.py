@@ -121,7 +121,7 @@ class CommonStageTest(StageTestBase):
             kwargs['close_date'] = close_date.isoformat()
 
         with freeze_time(mock_now):
-            scenario_xml = self.build_scenario_xml("", **kwargs)  # pylint: disable=star-args
+            scenario_xml = self.build_scenario_xml("", **kwargs)
             self.load_scenario_xml(scenario_xml)
 
             stage_element = self.get_stage(self.go_to_view())
@@ -326,23 +326,25 @@ class TeamEvaluationStageTest(BaseReviewStageTest, TestWithPatchesMixin):
         }
         self._assert_teammate_statuses(stage_element, expected_statuses)
 
-    @ddt.data(*list(KNOWN_USERS.keys()))  # pylint: disable=star-args
+    # pylint: disable=consider-iterating-dictionary
+    @ddt.data(*list(KNOWN_USERS.keys()))
     def test_interaction(self, user_id):
         stage_element = self.get_stage(self.go_to_view(student_id=user_id))
 
         other_users = set(KNOWN_USERS.keys()) - {user_id}
 
         # A default selection should be made automatically.
-        self.assertEquals(stage_element.form.peer_id, min(other_users))
+        self.assertEqual(stage_element.form.peer_id, min(other_users))
 
         peers = stage_element.peers
         self.assertEqual(len(peers), len(other_users))
-        for user_id, peer in zip(other_users, peers):
-            self.assertEqual(peer.name, KNOWN_USERS[user_id].username)
+        for peer_user_id, peer in zip(other_users, peers):
+            self.assertEqual(peer.name, KNOWN_USERS[peer_user_id].username)
             self.select_review_subject(peer)
-            self.assertEqual(stage_element.form.peer_id, user_id)
+            self.assertEqual(stage_element.form.peer_id, peer_user_id)
 
-    @ddt.data(*list(KNOWN_USERS.keys()))  # pylint: disable=star-args
+    # pylint: disable=consider-iterating-dictionary
+    @ddt.data(*list(KNOWN_USERS.keys()))
     def test_submission(self, user_id):
         self.make_patch(TeamEvaluationStage, 'anonymous_student_id', str(user_id))
         stage_element = self.get_stage(self.go_to_view(student_id=user_id))
@@ -740,7 +742,7 @@ class PeerReviewStageTest(BasePeerReviewStageTest, TestWithPatchesMixin):
             }
             for question, answer in expected_submissions.items()
             for group_id in workgroups_to_review
-            for reviewer_id in KNOWN_USERS.keys()
+            for reviewer_id in KNOWN_USERS
         ]
 
         group = stage_element.groups[0]

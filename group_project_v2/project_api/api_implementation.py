@@ -3,7 +3,7 @@ standard_library.install_aliases()
 from builtins import str
 from builtins import object
 import json
-from six.moves.urllib.parse import urlencode  # pylint: disable=E6011
+from six.moves.urllib.parse import urlencode
 
 import itertools
 
@@ -62,6 +62,7 @@ class ProjectAPI(object):
         else:
             response = method(url)
 
+        # pylint: disable=comparison-with-callable
         if method == DELETE:
             return None
 
@@ -190,7 +191,7 @@ class ProjectAPI(object):
                 question_data = current_data[question_id]
 
                 if question_data['answer'] != answer:
-                    if len(answer) > 0:
+                    if answer:
                         # update with relevant data
                         del question_data['created']
                         del question_data['modified']
@@ -200,7 +201,7 @@ class ProjectAPI(object):
                     else:
                         self.delete_peer_review_assessment(question_data['id'])
 
-            elif len(answer) > 0:
+            elif answer:
                 question_data = {
                     "question": question_id,
                     "answer": answer,
@@ -219,7 +220,7 @@ class ProjectAPI(object):
                 question_data = current_data[question_id]
 
                 if question_data['answer'] != answer:
-                    if len(answer) > 0:
+                    if answer:
                         # update with relevant data
                         del question_data['created']
                         del question_data['modified']
@@ -229,7 +230,7 @@ class ProjectAPI(object):
                     else:
                         self.delete_workgroup_review_assessment(question_data['id'])
 
-            elif len(answer) > 0:
+            elif answer:
                 question_data = {
                     "question": question_id,
                     "answer": answer,
@@ -263,7 +264,7 @@ class TypedProjectAPI(ProjectAPI):
         :rtype: UserDetails
         """
         response = self.send_request(GET, (USERS_API, user_id), no_trailing_slash=True)
-        return UserDetails(**response)  # pylint: disable=star-args
+        return UserDetails(**response)
 
     @memoize_with_expiration()
     def get_project_by_content_id(self, course_id, content_id):
@@ -291,7 +292,7 @@ class TypedProjectAPI(ProjectAPI):
         :rtype: ProjectDetails
         """
         response = self.send_request(GET, (PROJECTS_API, project_id), no_trailing_slash=True)
-        return ProjectDetails(**response)  # pylint: disable=star-args
+        return ProjectDetails(**response)
 
     @memoize_with_expiration()
     def get_workgroup_by_id(self, group_id):

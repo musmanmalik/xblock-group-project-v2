@@ -378,13 +378,13 @@ class WorkgroupAwareXBlockMixin(AuthXBlockMixin, UserAwareXBlockMixin, CourseAwa
                 return self.project_api.get_workgroup_by_id(
                     user_prefs[UserAwareXBlockMixin.TA_REVIEW_KEY]
                 )
-            else:
-                workgroup = self.project_api.get_user_workgroup_for_course(
-                    self.user_id, self.course_id
-                )
-                if workgroup is None:
-                    return self.FALLBACK_WORKGROUP
-                return workgroup
+            workgroup = self.project_api.get_user_workgroup_for_course(
+                self.user_id, self.course_id
+            )
+            if workgroup is None:
+                return self.FALLBACK_WORKGROUP
+            return workgroup
+        # pylint: disable=try-except-raise
         except GroupworkAccessDeniedError:
             raise
         except ApiError as exception:
@@ -544,9 +544,9 @@ class CompletionMixin(object):
 
 
 class CommonMixinCollection(
-    ChildrenNavigationXBlockMixin, XBlockWithComponentsMixin,
-    StudioEditableXBlockMixin, StudioContainerXBlockMixin,
-    WorkgroupAwareXBlockMixin, TemplateManagerMixin, SettingsMixin,
-    CompletionMixin,
+        ChildrenNavigationXBlockMixin, XBlockWithComponentsMixin,
+        StudioEditableXBlockMixin, StudioContainerXBlockMixin,
+        WorkgroupAwareXBlockMixin, TemplateManagerMixin, SettingsMixin,
+        CompletionMixin,
 ):
     block_settings_key = 'group_project_v2'

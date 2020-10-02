@@ -62,8 +62,7 @@ class BaseNotificationsTestCase(TestCase):
         args, _kwargs = target.call_args
         if including_kwargs:
             return args, _kwargs
-        else:
-            return args
+        return args
 
 
 @ddt.ddt
@@ -90,7 +89,7 @@ class TestStageNotificationsMixin(BaseNotificationsTestCase, TestWithPatchesMixi
 
         expected_user = next(user for user in workgroup.users if user.id == user_id)
         expected_action_username = expected_user.username
-        expected_user_ids = set([user.id for user in workgroup.users]) - {user_id}
+        expected_user_ids = {user.id for user in workgroup.users} - {user_id}
 
         with mock.patch('edx_notifications.data.NotificationMessage.add_click_link_params') as patched_link_params:
             block.fire_file_upload_notification(self.notifications_service_mock)
@@ -160,7 +159,7 @@ class TestStageNotificationsMixin(BaseNotificationsTestCase, TestWithPatchesMixi
                 including_kwargs=True,
             )
 
-            self.assertEquals(args, ())  # no positional arguments
+            self.assertEqual(args, ())  # no positional arguments
             self.assertEqual(kwargs['scope_name'], NotificationScopes.WORKGROUP)
             self.assertEqual(kwargs['scope_context'], {'workgroup_id': group_id})
             self.assertIsNotNone(kwargs['send_at'])

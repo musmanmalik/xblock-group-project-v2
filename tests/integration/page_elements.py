@@ -298,8 +298,7 @@ class InputControl(BaseElement):
     def __getattr__(self, item):
         if hasattr(self.element, item):
             return getattr(self.element, item)
-        else:
-            return self.element.get_attribute(item)
+        return self.element.get_attribute(item)
 
     def _wait_unitl_enabled(self):
         wait = WebDriverWait(self.element, self.timeout)
@@ -320,8 +319,7 @@ class InputControl(BaseElement):
         options = self.element.find_elements_by_tag_name("option")
         if options:
             return {option.get_attribute('value'): option.text for option in options}
-        else:
-            return None
+        return None
 
 
 class ProjectNavigatorElement(BaseElement):

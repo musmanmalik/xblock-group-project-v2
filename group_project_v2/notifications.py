@@ -102,6 +102,7 @@ class StageNotificationsMixin(object):
         A hook into when this xblock is published in Studio. When we are published we should
         register a Notification to be send on key dates
         """
+        # pylint: disable=logging-format-interpolation
         log.info('{}.on_published() on location = {}'.format(self.__class__.__name__, self.location))
 
         notifications_service = services.get('notifications')
@@ -144,8 +145,8 @@ class StageNotificationsMixin(object):
         :param CourseLocator _course_id: Course ID
         :param dict[str, object] services: runtime services
         """
+        # pylint: disable=logging-format-interpolation
         log.info('{}.on_before_delete() on location = {}'.format(self.__class__.__name__, self.location))
-
         notifications_service = services.get('notifications')
         if notifications_service:
             # If stage is being deleted, then it should remove any NotificationTimers that
@@ -155,9 +156,8 @@ class StageNotificationsMixin(object):
 
     @log_and_suppress_exceptions
     def fire_file_upload_notification(self, notifications_service):
-
+        # pylint: disable=logging-format-interpolation
         log.info('{}.fire_file_upload_notification on location = {}'.format(self.__class__.__name__, self.location))
-
         # this NotificationType is registered in the list of default Open edX Notifications
         msg_type = notifications_service.get_notification_type(NotificationMessageTypes.FILE_UPLOADED)
 
@@ -188,6 +188,7 @@ class StageNotificationsMixin(object):
 
     @log_and_suppress_exceptions
     def fire_grades_posted_notification(self, group_id, notifications_service):
+        # pylint: disable=logging-format-interpolation
         log.info(
             '{}.fire_grades_posted_notification on location = {} and group id = {}'.format(
                 self.__class__.__name__, self.location,

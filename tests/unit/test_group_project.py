@@ -107,7 +107,7 @@ class TestGroupProjectXBlock(TestWithPatchesMixin, TestCase):
         args, kwargs = actual_parameters[0]
         self.assertEqual(len(args), 2)
         self.assertEqual(kwargs, {})
-        self.assertEqual(set([user.id for user in args[0]]), set(users_to_export_ids))
+        self.assertEqual({user.id for user in args[0]}, set(users_to_export_ids))
         self.assertEqual(args[1], expected_filename)
 
     def test_download_incomplete_list_csv_contents(self):
@@ -408,7 +408,7 @@ class TestCalculateGradeGroupActivityXBlock(TestWithPatchesMixin, TestCase):
     )
     @ddt.unpack
     def test_calculate_grade_with_admins(
-        self, group_id, question_ids, reviewer_ids, reviews, admin_reviews, expected_grade
+            self, group_id, question_ids, reviewer_ids, reviews, admin_reviews, expected_grade
     ):
         self.project_api_mock.get_workgroup_reviewers = mock.Mock(
             return_value=[{"id": rew_id} for rew_id in reviewer_ids]

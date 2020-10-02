@@ -409,8 +409,7 @@ class PeerReviewStage(ReviewBaseStage):
         def do_get_items(group_id):
             if with_caching:
                 return self._get_review_items_for_group(self.project_api, group_id, self.activity_content_id)
-            else:
-                return self.project_api.get_workgroup_review_items_for_group(group_id, self.activity_content_id)
+            return self.project_api.get_workgroup_review_items_for_group(group_id, self.activity_content_id)
 
         return list(itertools.chain.from_iterable(do_get_items(group.id) for group in review_groups))
 

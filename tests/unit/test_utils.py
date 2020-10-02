@@ -26,6 +26,7 @@ class FieldValuesContextManagerTests(TestCase):
 
     @ddt.data([], [1, 2, 3], list(range(5)))
     def test_context_manager(self, values):
+        # pylint: disable=unsubscriptable-object
         values_generator = mock.Mock(return_value=values)
         initial_values = self.block.fields['field'].values
 

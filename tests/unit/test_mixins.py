@@ -8,11 +8,9 @@ from unittest import TestCase
 import ddt
 import mock
 from opaque_keys.edx.locator import BlockUsageLocator, CourseLocator
-from xblock.completable import XBlockCompletionMode
 from xblock.core import XBlock
 from xblock.runtime import Runtime
 
-from group_project_v2 import app_config
 from group_project_v2.mixins import (
     ChildrenNavigationXBlockMixin, CourseAwareXBlockMixin, UserAwareXBlockMixin,
     WorkgroupAwareXBlockMixin, DashboardRootXBlockMixin,

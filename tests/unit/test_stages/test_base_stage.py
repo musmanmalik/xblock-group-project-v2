@@ -13,7 +13,7 @@ from tests.unit.test_stages.base import BaseStageTest
 from tests.utils import WORKGROUP, KNOWN_USERS, OTHER_GROUPS, TestConstants
 
 
-TEST_USERS = TestConstants.Users
+TEST_USERS = TestConstants.Users  # pylint: disable=invalid-name
 
 
 class DummyStageBlock(BaseGroupActivityStage):
@@ -221,7 +221,7 @@ class TestBaseGroupActivityStage(BaseStageTest):
         completed_user_ids = set(completed_user_ids)
         partial_user_ids = set(partial_user_ids)
         patched_completions = self.make_patch(self.block, 'get_users_completion')
-        self.block.display_name = "dummy block"
+        self.block.display_name = "dummy block"  # pylint: disable=attribute-defined-outside-init
         patched_completions.return_value = (completed_user_ids, partial_user_ids)
 
         target_workgroups = tuple()
