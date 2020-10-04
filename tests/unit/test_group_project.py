@@ -134,6 +134,7 @@ class TestGroupProjectXBlock(TestWithPatchesMixin, TestCase):
             response = self.block.download_incomplete_list(request_mock)
 
         self.assertEqual(response.status_code, 200)
+        # pylint: disable=unnecessary-comprehension
         reader = csv.DictReader([line for line in response.text.split("\n")])
         lines = [line for line in reader]
         self.assertEqual(reader.fieldnames, GroupProjectXBlock.CSV_HEADERS)

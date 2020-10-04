@@ -359,6 +359,7 @@ class ProjectNavigatorViewElement(BaseElement):
         return self.element.get_attribute("data-view-type")
 
     def close_view(self):
+        # pylint: disable=raise-missing-from
         try:
             close_button = self.element.find_element_by_css_selector(".group-project-navigator-view-close")
             close_button.click()

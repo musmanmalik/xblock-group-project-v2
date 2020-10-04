@@ -8,7 +8,7 @@ import mock
 from group_project_v2.json_requests import GET
 from group_project_v2.project_api import TypedProjectAPI
 from group_project_v2.project_api.api_implementation import WORKGROUP_API, PROJECTS_API, COURSES_API
-from tests.utils import TestWithPatchesMixin, make_review_item as mri
+from tests.utils import TestWithPatchesMixin, find_url, make_review_item as mri
 import tests.unit.project_api.canned_responses as canned_responses  # pylint: disable=useless-import-alias
 from six.moves.urllib.parse import urlencode
 
@@ -37,8 +37,9 @@ class TestProjectApi(TestCase, TestWithPatchesMixin):
     def _patch_do_send_request(self, urls_and_results, missing_callback=None):
         # pylint: disable=unused-argument
         def side_effect(method, url, data=None):
-            if url in urls_and_results:
-                return urls_and_results[url]
+            matched_url = find_url(url, urls_and_results)
+            if matched_url:
+                return urls_and_results[matched_url]
             if 'default' in urls_and_results:
                 return urls_and_results['default']
             if missing_callback:
@@ -356,7 +357,7 @@ class TestProjectApi(TestCase, TestWithPatchesMixin):
         def build_url(course_id, content_id, page_num=None):
             query_params = {'content_id': content_id}
             if page_num:
-                query_params['page'] = page_num
+                query_params = {'page': page_num, 'content_id': content_id}
             return self.project_api.build_url((COURSES_API, course_id, 'completions'), query_params=query_params)
 
         course, content = 'course1', 'content1'

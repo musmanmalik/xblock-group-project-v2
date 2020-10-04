@@ -2,6 +2,7 @@ from past.builtins import basestring
 from builtins import object
 from contextlib import contextmanager
 from datetime import datetime
+from urllib.parse import urlparse
 
 import mock
 from mock import Mock
@@ -204,3 +205,19 @@ class MockedAuthXBlockMixin(AuthXBlockMixin):
     @property
     def see_dashboard_for_all_orgs_perms(self):
         return []
+
+
+def _get_url_info(url):
+    parsed_url = urlparse(url)
+    url_path = parsed_url.path
+    url_query = set(parsed_url.query.split("&"))
+    return url_path, url_query
+
+
+def find_url(url, urls):
+    main_url_path, main_url_query = _get_url_info(url)
+    for url_check in urls:
+        check_url_path, check_url_query = _get_url_info(url_check)
+        if check_url_path == main_url_path and check_url_query == main_url_query:
+            return url_check
+    return None

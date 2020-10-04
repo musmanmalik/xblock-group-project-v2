@@ -53,6 +53,7 @@ class TestProjectNavigatorViews(SingleScenarioTestSuite, TestWithPatchesMixin):
         """
         Checks view visibility - only `visible_view` should be displayed, other views should be hidden
         """
+        # pylint: disable=raise-missing-from
         hidden_views = set(available_views) - {visible_view}
         for view in hidden_views:
             try:
