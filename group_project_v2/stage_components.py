@@ -701,6 +701,7 @@ class GroupProjectReviewQuestionXBlock(BaseStageComponentXBlock, StudioEditableX
         return fragment
 
 
+@XBlock.needs("i18n")
 class GroupProjectBaseFeedbackDisplayXBlock(
         BaseStageComponentXBlock, StudioEditableXBlockMixin, XBlockWithPreviewMixin, WorkgroupAwareXBlockMixin
 ):

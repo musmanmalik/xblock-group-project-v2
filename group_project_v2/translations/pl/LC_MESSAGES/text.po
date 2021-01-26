@@ -388,7 +388,7 @@ msgstr "Wyświetlanie oceny"
 
 #: stage/feedback_review.py:163 stage_components.py:746
 msgid "N/A"
-msgstr "N/D"
+msgstr "Note: k. A"
 
 #: stage/mixins.py:14
 msgid "Completed"
